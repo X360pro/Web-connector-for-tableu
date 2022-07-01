@@ -1,0 +1,96 @@
+ALTER TABLE records
+RENAME TO bubble_frankstillone_costcentre; 
+
+select * from bubble_frankstillone_costcentre;
+
+ALTER TABLE records2
+RENAME TO bubble_frankstillone_bankdata;
+
+ALTER USER blackcoffer WITH PASSWORD '4321';
+
+ALTER TABLE bubble_frankstillone_costcentre ADD UNIQUE (id);
+
+ALTER TABLE bubble_frankstillone_bankdata ADD UNIQUE (id);
+
+ALTER TABLE aternic_cc_stats ADD UNIQUE (uniqueid);
+
+DELETE FROM bubble_frankstillone_bankdata;
+
+DELETE FROM bubble_frankstillone_costcentre;
+
+0 0 * * * /root/python3 costcentre_connector.py
+
+0 0 * * * /root/python3 bankdata_connector.py
+
+* * * * * /root/python3 asternic_connector.py
+
+
+CREATE TABLE aternic_cc_stats(
+    overflow int,
+    uniqueid double precision unique, --> VARCHAR
+    clid int, --> VARCHAR
+    queuereal int, --> VARCHAR
+    did bigint, --> VARCHAR
+	 datetime timestamp,
+	 dateStart timestamp,
+	 dateEnd timestamp,
+	 event varchar(50),
+	 agent varchar(50),
+	 agent_name varchar(50),
+	 queuename int, --> VARCHAR
+	 queue_name int, --> VARCHAR
+	 waitTime int, --> VARCHAR
+	talkTime float, 
+	combinedWaitTime float,
+	totalDuration float,
+	recordingFilename varchar
+);
+
+ALTER TABLE aternic_cc_stats 
+ALTER COLUMN uniqueid TYPE VARCHAR,
+ALTER COLUMN clid TYPE VARCHAR,
+ALTER COLUMN queuereal TYPE VARCHAR,
+ALTER COLUMN  did TYPE VARCHAR,
+ALTER COLUMN queuename TYPE VARCHAR,
+ALTER COLUMN queue_name TYPE VARCHAR,
+ALTER COLUMN waitTime TYPE VARCHAR;
+
+
+GRANT ALL PRIVILEGES ON TABLE aternic_cc_stats TO blackcoffer;
+
+ALTER TABLE aternic_cc_stats ALTER COLUMN clid TYPE VARCHAR;
+
+CREATE TABLE calcium_calendar_roster(
+	subject VARCHAR,
+	start_Date DATE,
+	start_Time TIME,
+	end_Date DATE,
+	end_Time TIME,
+	all_day_event VARCHAR,
+	description VARCHAR,
+	categories VARCHAR,
+	owner_Username VARCHAR,
+	calendar_Name VARCHAR
+);
+ 
+GRANT ALL PRIVILEGES ON TABLE calcium_calendar_roster TO blackcoffer;
+
+ALTER USER postgres PASSWORD 'Q7MRvA$Ne4Kx^0';
+
+ALTER DATABASE tableu_database RENAME TO tableau_database;
+
+SELECT column_name, data_type FROM information_schema.columns WHERE 
+table_name = 'calcium_calender_roster'
+
+
+ALTER TABLE aternic_cc_stats ALTER COLUMN waittime TYPE integer USING (waittime::integer);
+
+
+
+
+
+
+
+
+
+
